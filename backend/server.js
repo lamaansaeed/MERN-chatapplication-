@@ -1,8 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoute");
+const friendRoutes = require("./routes/friendRoute");
+const messageRoutes = require('./routes/messageRoute');
+const searchRoutes = require('./routes/searchRoute');
+const friendSuggestionRoutes = require('./routes/friendSuggestionRoute');
 const bodyParser = require("body-parser");
 require("dotenv").config();
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -10,8 +15,19 @@ app.use(bodyParser.json());
 const cors = require("cors");
 app.use(cors({ credentials: true, origin: `http://localhost:3000` }));
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Headers", "Authorization, Content-Type");
+  next();
+});
+
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api", friendRoutes);
+app.use("/api", messageRoutes);
+app.use("/search", searchRoutes);
+app.use("/api",friendSuggestionRoutes);
+
+
 
 // MongoDB Connection
 mongoose

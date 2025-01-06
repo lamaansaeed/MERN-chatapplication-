@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User"); // Your User model
-const redisClient = require("../config/redis"); // Redis client
+//const redisClient = require("../config/redis"); // Redis client
 
 // Register User
 exports.registerUser = async (req, res) => {
@@ -40,15 +40,18 @@ exports.login = async (req, res) => {
       if (!isPasswordValid) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
-  
+      
       // Generate JWT
+       
+    
+      
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "1h", // Set token expiration
       });
   
-      // Save token in Redis for session management
-      await redisClient.setEx(`user:${user._id}`, 3600, token); // Key: user:{id}, Value: token, TTL: 1hr
-  
+      // // Save token in Redis for session management
+      // const session = await redisClient.setEx(`user:${user._id}`, 3600, token); // Key: user:{id}, Value: token, TTL: 1hr
+      // console.log(session ,'here is session');
       res.status(200).json({ message: "Login successful", token });
     } catch (error) {
       console.error("Login Error:", error);
