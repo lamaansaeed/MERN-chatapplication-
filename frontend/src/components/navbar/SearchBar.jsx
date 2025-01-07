@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import ChatBox from "../ChatBox"; // Import the ChatBox component
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [friends, setFriends] = useState([]); // Store the user's friends
+  const [selectedUser, setSelectedUser] = useState(null); // Track the selected user for chat
 
   // Fetch the user's friends when the component mounts
   useEffect(() => {
@@ -91,10 +93,10 @@ const SearchBar = () => {
     }
   };
 
-  const handleChat = (isFriend) => {
-    if (isFriend) {
-      // Open chat box (you can implement this later)
-      alert("Chat box will open here");
+  const handleChat = (user) => {
+    if (user.isFriend) {
+      // Open chat box for the selected user
+      setSelectedUser(user);
     } else {
       alert("You cannot chat with this user. You are not friends.");
     }
@@ -135,7 +137,7 @@ const SearchBar = () => {
                   </button>
                 )}
                 <button
-                  onClick={() => handleChat(isFriend)}
+                  onClick={() => handleChat(user)}
                   className="text-blue-500 hover:text-blue-700 ml-2"
                 >
                   Chat
@@ -145,6 +147,11 @@ const SearchBar = () => {
           );
         })}
       </ul>
+
+      {/* Render the ChatBox if a user is selected */}
+      {selectedUser && (
+        <ChatBox receiverId={selectedUser._id} onClose={() => setSelectedUser(null)} />
+      )}
     </div>
   );
 };

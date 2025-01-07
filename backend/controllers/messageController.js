@@ -95,3 +95,30 @@ exports.markMessageAsRead = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+// Fetch messages between two users with pagination
+exports.getMessagesBetweenUsers = async (req, res) => {
+    try {
+      const { receiverId, page = 1, limit = 10 } = req.query; // Add pagination parameters
+      const senderId = req.user.id; // Authenticated user's ID
+  
+      // Calculate skip value for pagination
+      const skip = (page - 1) * limit;
+  
+      // Fetch messages between sender and receiver
+      const messages = await Message.find({
+        $or: [
+          { sender: senderId, receiver: receiverId },
+          { sender: receiverId, receiver: senderId },
+        ],
+      })
+        .sort({ createdAt: -1 }) // Sort by creation time (newest first)
+        .skip(skip) // Skip messages for pagination
+        .limit(limit); // Limit the number of messages per page
+  
+      res.status(200).json(messages);
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+      res.status(500).json({ message: "Something went wrong" });
+    }
+  };
