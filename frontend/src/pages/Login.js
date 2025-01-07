@@ -41,6 +41,10 @@ const Login = () => {
     }
   };
 
+  const handleSignupRedirect = () => {
+    navigate("/register"); // Navigate to the signup page
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded">
@@ -78,6 +82,15 @@ const Login = () => {
             className="w-full py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
           >
             Login
+          </button>
+
+          {/* Sign Up Button */}
+          <button
+            type="button"
+            onClick={handleSignupRedirect}
+            className="w-full py-2 text-white bg-gray-500 rounded-md hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-300"
+          >
+            Sign Up
           </button>
         </form>
       </div>
