@@ -4,6 +4,7 @@ import { SocketProvider } from "./pages/SocketContext";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 import FriendsList from "./components/FriendsList";
 import FriendRequestsList from "./components/FriendRequestsList";
 import ConversationsList from "./components/ConversationsList";
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="friends" element={<FriendsList />} />
             <Route path="friend-requests" element={<FriendRequestsList />} />
